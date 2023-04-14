@@ -10,7 +10,10 @@
     "e2e": "ng e2e",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "start:mock-server": "nodemon -w . -x \"npx ws -c server/config.js --mocks server/mocks.js\""
+    "build:mock-api": "tsc --build tsconfig.mock.json",
+    "build:watch:mock-api": "tsc --watch --project tsconfig.mock.json",
+    "start:mock-server": "nodemon -w . -x \"npx ws -c server/config.js --mocks server/mocks.js\"",
+    "start-and-watch:mocks": "concurrently \"npm run build:watch:mock-api\" \"npm run start:mock-server\""
   },
   "private": true,
   "dependencies": {
@@ -32,6 +35,8 @@
     "@angular/compiler-cli": "^15.2.0",
     "@cypress/schematic": "^2.5.0",
     "@types/jasmine": "~4.3.0",
+    "@types/koa": "^2.13.6",
+    "concurrently": "^8.0.1",
     "cypress": "latest",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",

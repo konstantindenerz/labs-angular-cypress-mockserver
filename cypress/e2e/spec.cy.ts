@@ -1,7 +1,9 @@
+import {OVERVIEW} from './mocks/overview.mocks';
+
 describe('My First Test with overview', () => {
   beforeEach(() => {
     cy.intercept('**', (request) => {
-      request.headers['cypress-scope'] = 'overview';
+      request.headers['cypress-scope'] = OVERVIEW.scope;
     });
   })
 
