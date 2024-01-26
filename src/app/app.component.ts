@@ -16,7 +16,7 @@ export class AppComponent {
   reporting$:Observable<Reporting>;
 
   constructor(httpClient: HttpClient) {
-    this.list$ = httpClient.get<number[]>('http://localhost:5005/api/list');
+    this.list$ = httpClient.get<number[]>('http://localhost:5005/api/list?query=all');
     this.user$ = httpClient.get<User>('http://localhost:5005/api/user/2/5');
     this.reporting$ = httpClient.get<Reporting>('http://localhost:5005/api/reporting');
   }

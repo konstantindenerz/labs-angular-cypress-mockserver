@@ -31,11 +31,10 @@ const routes = Object.values(cases).map((item) => {
 class Mocks {
   mocks() {
     return routes.map(route => ({
-      route: route, // api/list
+      route: route, // api/user/:group/:id
       responses: [
         {
           response: (ctx, ...params) => {
-            console.log('route', route)
             let scope = ctx.request.headers['cypress-scope'];
             if (scope === undefined || cases[scope] === undefined) {
               scope = BASELINE.scope;
@@ -49,6 +48,8 @@ class Mocks {
 
               ctx.body = typeof mockItem?.response === 'function' ? mockItem?.response(ctx) : mockItem?.response;
               if (ctx.body !== undefined) {
+                ctx.body = Object.assign({}, ctx.body, ctx.request.query);
+
                 [...route.matchAll(/[:]([a-zA-Z]*)/g)].forEach(([key, name], index) => {
                   ctx.body = {...ctx.body, [name]: params[index]};
                 })
