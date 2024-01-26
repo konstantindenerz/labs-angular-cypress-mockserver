@@ -47,7 +47,7 @@ class Mocks {
               }
 
               ctx.body = typeof mockItem?.response === 'function' ? mockItem?.response(ctx) : mockItem?.response;
-              if (ctx.body !== undefined) {
+              if (ctx.body !== undefined && !Array.isArray(ctx.body)) {
                 ctx.body = Object.assign({}, ctx.body, ctx.request.query);
 
                 [...route.matchAll(/[:]([a-zA-Z]*)/g)].forEach(([key, name], index) => {
