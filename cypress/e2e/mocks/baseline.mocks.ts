@@ -13,6 +13,9 @@ export const BASELINE: MockSet = {
     },
     {
       route: '/api/reporting', response: {id: `${Date.now()}`, data: [1,2,3,4,5]} as Reporting,
-    }
+    },
+    {
+      route: '/api/user/:group/:id', response: { name: 'foobar'} as User,
+    },
   ]
 }

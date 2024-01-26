@@ -17,7 +17,7 @@ export class AppComponent {
 
   constructor(httpClient: HttpClient) {
     this.list$ = httpClient.get<number[]>('http://localhost:5005/api/list');
-    this.user$ = httpClient.get<User>('http://localhost:5005/api/user');
+    this.user$ = httpClient.get<User>('http://localhost:5005/api/user/2/5');
     this.reporting$ = httpClient.get<Reporting>('http://localhost:5005/api/reporting');
   }
 }

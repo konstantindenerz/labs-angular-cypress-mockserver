@@ -9,7 +9,7 @@ const cases = {
 
 const directory = path.join(__dirname, '../dist/mock-server/api/cypress/e2e/mocks/');
 fs.readdir(directory, (err, list) => {
-  if(err) {
+  if (err) {
     console.error(err);
     return;
   }
@@ -19,7 +19,6 @@ fs.readdir(directory, (err, list) => {
     cases[scope] = {scope, mocks};
   })
 });
-
 
 
 const routes = Object.values(cases).map((item) => {
@@ -35,18 +34,26 @@ class Mocks {
       route: route, // api/list
       responses: [
         {
-          response: (ctx) => {
+          response: (ctx, ...params) => {
+            console.log('route', route)
             let scope = ctx.request.headers['cypress-scope'];
-            if(scope === undefined || cases[scope] === undefined){
+            if (scope === undefined || cases[scope] === undefined) {
               scope = BASELINE.scope;
             }
             if (cases[scope]) {
               const caseItem = cases[scope];
               let mockItem = caseItem.mocks.reverse().find(current => current.route === route);
-              if(!mockItem){
+              if (!mockItem) {
                 mockItem = BASELINE.mocks.reverse().find(current => current.route === route);
               }
+
               ctx.body = typeof mockItem?.response === 'function' ? mockItem?.response(ctx) : mockItem?.response;
+              if (ctx.body !== undefined) {
+                [...route.matchAll(/[:]([a-zA-Z]*)/g)].forEach(([key, name], index) => {
+                  ctx.body = {...ctx.body, [name]: params[index]};
+                })
+              }
+
             } else {
               ctx.body = '';
             }
