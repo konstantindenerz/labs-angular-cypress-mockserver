@@ -54,6 +54,9 @@ class Mocks {
                   ctx.body = {...ctx.body, [name]: params[index]};
                 })
               }
+              if(mockItem?.status !== undefined){
+                ctx.status = mockItem?.status;
+              }
 
             } else {
               ctx.body = '';

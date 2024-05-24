@@ -17,7 +17,7 @@ export class AppComponent {
 
   constructor(httpClient: HttpClient) {
     this.list$ = httpClient.get<number[]>('http://localhost:5005/api/list?query=all');
-    this.user$ = httpClient.get<User>('http://localhost:5005/api/user/2/5');
+    this.user$ = httpClient.get<User>('http://localhost:5005/api/user/2/6?id=42&foo=bubu');
     this.reporting$ = httpClient.get<Reporting>('http://localhost:5005/api/reporting');
   }
 }
